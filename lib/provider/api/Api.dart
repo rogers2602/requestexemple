@@ -68,7 +68,7 @@ class Api {
       headersAdd.addAll(headers);
     }
 
-    var _responseDefault = http.Response(jsonEncode({"Resposta": "Não encontrado"}), 404);
+    var _responseDefault = http.Response(jsonEncode({"Response": "Não encontrado"}), 404);
 
     try {
       switch (typeRequest) {
@@ -87,13 +87,13 @@ class Api {
       }
     } on SocketException catch (e) {
       if (!kReleaseMode) debugPrint("SocketException" + e.toString());
-      _responseDefault = http.Response(jsonEncode({"Resposta": "Verifique sua conexão com a internet!"}), 408);
+      _responseDefault = http.Response(jsonEncode({"Response": "Verifique sua conexão com a internet!"}), 408);
     } on FormatException catch (e) {
       if (!kReleaseMode) debugPrint("FormatException" + e.toString());
-      _responseDefault = http.Response(jsonEncode({"Resposta": "Ocorreu algum erro ao obter dados do servidor!"}), 404);
+      _responseDefault = http.Response(jsonEncode({"Response": "Ocorreu algum erro ao obter dados do servidor!"}), 404);
     } on Exception catch (e) {
       if (!kReleaseMode) debugPrint('ERROR: Exception: ' + e.toString());
-      _responseDefault = http.Response(jsonEncode({"Resposta": 'Ocorreu um erro: ' + e.toString()}), 500);
+      _responseDefault = http.Response(jsonEncode({"Response": 'Ocorreu um erro: ' + e.toString()}), 500);
     }
     return _responseDefault;
   }

@@ -74,3 +74,8 @@ flutter:
     - family: Bold
       fonts:
         - asset: fonts/googlesansebold.ttf
+
+  assets:
+    - assets/image/not_found.svg
+    - assets/image/notify.svg
+    - assets/image/error.svg

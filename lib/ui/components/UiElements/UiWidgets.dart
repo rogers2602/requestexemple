@@ -70,12 +70,38 @@ class UiWidgets {
             child: CircularProgressIndicator(backgroundColor: Colors.deepOrange, valueColor: AlwaysStoppedAnimation<Color>(Colors.orange))));
   }
 
-  textButtonView(
+  Widget errorWidget(BuildContext context, {int? code, String? msg, Function()? onTryAgainClick}) {
+    switch (code) {
+      case 404:
+        return _errorImgAndDescription(context, msg: msg, img: "assets/image/not_found.svg", onTryAgainClick: onTryAgainClick);
+      case 408:
+        return _errorImgAndDescription(context, msg: msg, img: "assets/image/notify.svg", onTryAgainClick: onTryAgainClick);
+      default:
+        return _errorImgAndDescription(context, msg: msg, img: "assets/image/error.svg", onTryAgainClick: onTryAgainClick);
+    }
+  }
+
+  _errorImgAndDescription(BuildContext context, {String? img, String? msg, Function()? onTryAgainClick}) {
+    var width = MediaQuery.of(context).size.width;
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          svgImage(context, svgPath: "$img", width: width * 0.6),
+          Padding(padding: const EdgeInsets.all(20), child: textView(text: "$msg")),
+          buttonGradient(text: "Tente novamente", colors: [Colors.cyan, Colors.cyan.shade900], onClick: onTryAgainClick)
+        ],
+      ),
+    );
+  }
+
+  Widget textButtonView(
       {required String text, double? size, String font = "Regular", Color? color = Colors.black54, TextDecoration? decoration, Function()? onClick}) {
     return GestureDetector(child: textView(text: text, size: size, font: font, color: color, decoration: decoration), onTap: onClick);
   }
 
-  divider({Color? color = Colors.grey, required double height, required double width, EdgeInsets margin = const EdgeInsets.fromLTRB(0, 8, 0, 0)}) {
+  Widget divider(
+      {Color? color = Colors.grey, required double height, required double width, EdgeInsets margin = const EdgeInsets.fromLTRB(0, 8, 0, 0)}) {
     return Container(color: color, height: height, width: width, margin: margin);
   }
 

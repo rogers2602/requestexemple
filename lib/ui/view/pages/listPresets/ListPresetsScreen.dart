@@ -35,10 +35,19 @@ class ListPresetsState extends State<ListPresets> {
                 ? Center(
                     child: UiComponent.customWidgets.progressLoad(),
                   )
-                : ListView.builder(
-                    itemCount: _listController.presetItems.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return UiComponent.presetItemUi.itemListXml(context, item: _listController.presetItems[index]);
-                    })));
+                : _listController.hasError
+                    ? UiComponent.customWidgets.errorWidget(context, code: _listController.requestCode, msg: _listController.errorMsg,
+                        onTryAgainClick: () {
+                        _listController.presetsList();
+                      })
+                    : RefreshIndicator(
+                        onRefresh: () {
+                          return _listController.presetsList();
+                        },
+                        child: ListView.builder(
+                            itemCount: _listController.presetItems.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return UiComponent.presetItemUi.itemListXml(context, item: _listController.presetItems[index]);
+                            }))));
   }
 }
